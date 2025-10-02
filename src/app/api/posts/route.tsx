@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 import jwt from "jsonwebtoken";
 
-// Ambil secret dari .env
 const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
 
 export async function GET(req: Request) {
@@ -20,7 +19,6 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Invalid token" }, { status: 403 });
     }
 
-    // Jika lolos verifikasi, ambil data post
     const [rows] = await pool.query(`
       SELECT id, title, author, createdDate
       FROM posts

@@ -1,5 +1,6 @@
-@import "../styles/colors.scss";
-@import "../styles/container.scss";
+@use "../styles/colors.scss" as *;
+@forward "../styles/colors.scss";
+@forward "../styles/container.scss";
 
 body {
   margin: 0;

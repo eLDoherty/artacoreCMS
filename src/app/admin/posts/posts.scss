@@ -1,5 +1,5 @@
 @use "sass:color";
-@import "../../globals.scss";
+@use "../../globals.scss" as *;
 
 .arta-admin-posts {
   padding: 1.5rem;
