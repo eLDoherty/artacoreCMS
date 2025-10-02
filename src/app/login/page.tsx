@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import "./login.scss";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -25,26 +26,30 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", padding: "2rem" }}>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        /><br />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        /><br />
-        <button type="submit">Login</button>
-      </form>
-      {message && <p style={{ color: "red" }}>{message}</p>}
+    <div className="arta-login">
+        <div className="arta-container">       
+            <div className="arta-login__card">
+                <h2>Login</h2>
+                <form onSubmit={handleLogin}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+            {message && <p style={{ color: "red" }}>{message}</p>}
+        </div>
     </div>
   );
 }

@@ -1,0 +1,61 @@
+@import "../globals.scss";
+
+.arta-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $background-color;
+
+  &__card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: $text-color;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      input {
+        width: 320px;
+        max-width: 100%;
+        padding: 0.6rem;
+        margin-bottom: 1rem;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        font-size: 14px;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+        }
+      }
+
+      button {
+        width: 320px;
+        max-width: 100%;
+        padding: 0.6rem;
+        border: none;
+        border-radius: 6px;
+        background: $primary-color;
+        color: $white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: $button-hover-bg;
+        }
+      }
+    }
+  }
+}

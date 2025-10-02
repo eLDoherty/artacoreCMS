@@ -1,0 +1,88 @@
+@use "sass:color";
+@import "../../globals.scss";
+
+.arta-admin-posts {
+  padding: 1.5rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $heading-color;
+  }
+
+  &__content {
+    background: $surface-color;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.arta-empty {
+  text-align: center;
+  color: $secondary-text-color;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+.arta-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 0.75rem;
+    border-bottom: 1px solid $border-color;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  th {
+    background: $background-color;
+    color: $secondary-text-color;
+    font-weight: 600;
+  }
+
+  tr:hover {
+    background: $hover-bg-color;
+  }
+}
+
+.arta-button {
+  padding: 0.45rem 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-right: 0.4rem;
+  transition: all 0.2s ease;
+
+  &--primary {
+    background: $primary-color;
+    color: $white;
+
+    &:hover {
+        background: color.adjust($primary-color, $lightness: 10%);
+    }
+  }
+
+  &--danger {
+    background: $error-color;
+    color: $white;
+
+    &:hover {
+        background: color.adjust($error-color, $lightness: -5%);
+    }
+  }
+
+  &--small {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+  }
+}

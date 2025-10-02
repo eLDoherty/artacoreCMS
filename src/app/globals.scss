@@ -1,0 +1,9 @@
+@import "../styles/colors.scss";
+@import "../styles/container.scss";
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: $background-color;
+  color: $text-color;
+}

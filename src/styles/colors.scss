@@ -1,0 +1,27 @@
+@use "sass:color";
+
+$primary-color: #4A5D9D;
+$secondary-color: #D17A22;
+
+$background-color: #F5F6FA;
+$surface-color: #FFFFFF;
+$card-bg-color: #FAFAFB;
+
+$text-color: #2C3E50;
+$secondary-text-color: #7F8C8D;
+$heading-color: #1B1F3B;
+
+$border-color: #E0E4EA;
+$hover-bg-color: #EAEFF5;
+$focus-border-color: #4A5D9D;
+
+$success-color: #2E7D32;
+$warning-color: #ED6C02;
+$error-color: #C62828;
+
+$disabled-color: #BDC3C7;
+$overlay-color: rgba(0, 0, 0, 0.4);
+
+$button-hover-bg: color.adjust($primary-color, $lightness: 10%);
+
+$white: #FFFFFF;
