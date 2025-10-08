@@ -8,12 +8,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^11.0.0",
     "bcryptjs": "^3.0.2",
+    "ckeditor5": "^47.0.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.15.1",
     "next": "15.5.4",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "sass": "^1.93.2"
   },
   "devDependencies": {
