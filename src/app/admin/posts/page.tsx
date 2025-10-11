@@ -30,6 +30,7 @@ export default function PostList() {
         });
 
         if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("token");
           window.location.href = "/login";
           return;
         }
@@ -46,6 +47,43 @@ export default function PostList() {
     fetchPosts();
   }, []);
 
+  const handleAdd = () => {
+    window.location.href = "/admin/posts/add";
+  };
+
+  const handleEdit = (id: number) => {
+    window.location.href = `/admin/posts/edit/${id}`;
+  };
+
+  const handleDelete = async (id: number) => {
+    const confirmDelete = confirm("Are you sure you want to delete this post?");
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`/api/posts/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
+        }
+
+      if (res.ok) {
+        setPosts((prev) => prev.filter((p) => p.id !== id));
+      } else {
+        alert("Failed to delete post");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (loading) {
     return <p className="arta-loading">Loading...</p>;
   }
@@ -54,7 +92,9 @@ export default function PostList() {
     <div className="arta-admin-posts">
       <header className="arta-admin-posts__header">
         <h1 className="arta-admin-posts__title">Post List</h1>
-        <button className="arta-button arta-button--primary">+ Add Post</button>
+        <button onClick={handleAdd} className="arta-button arta-button--primary">
+          + Add Post
+        </button>
       </header>
 
       <main className="arta-admin-posts__content">
@@ -79,8 +119,16 @@ export default function PostList() {
                   <td>{post.author}</td>
                   <td>{new Date(post.createdDate).toLocaleDateString()}</td>
                   <td>
-                    <button className="arta-button arta-button--small">Edit</button>
-                    <button className="arta-button arta-button--small arta-button--danger">
+                    <button
+                      onClick={() => handleEdit(post.id)}
+                      className="arta-button arta-button--small"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(post.id)}
+                      className="arta-button arta-button--small arta-button--danger"
+                    >
                       Delete
                     </button>
                   </td>

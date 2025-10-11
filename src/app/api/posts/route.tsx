@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
+const JWT_SECRET = process.env.JWT_SECRET!;
 
+// Get for post list
 export async function GET(req: Request) {
   try {
     const authHeader = req.headers.get("authorization");
@@ -65,7 +66,7 @@ export async function POST(req: Request) {
       [
         title,
         "Admin",
-        "Publish",
+        "published",
         0,
         content,
         description || "",
@@ -81,6 +82,6 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ status: "erroro", error: "Failed to create post" }, { status: 500 });
+    return NextResponse.json({ status: "error", error: "Failed to create post" }, { status: 500 });
   }
 }

@@ -19,6 +19,13 @@ export default function AddPostPage() {
     async function fetchCategories() {
       try {
         const res = await fetch("/api/categories");
+
+        if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
+        }
+
         if (res.ok) {
           const data = await res.json();
           setCategories(data);
@@ -50,7 +57,7 @@ export default function AddPostPage() {
       let thumbnailUrl = "";
       if (thumbnail) {
         const formData = new FormData();
-        formData.append("file", thumbnail);
+        formData.append("upload", thumbnail);
 
         const uploadRes = await fetch("/api/upload", {
           method: "POST",
@@ -79,8 +86,14 @@ export default function AddPostPage() {
         }),
       });
 
+      if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
+        }
+
       if (res.ok) {
-        router.push("/admin/post");
+        router.push("/admin/posts");
       } else {
         console.error("Error save posts");
       }

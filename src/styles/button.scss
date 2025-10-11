@@ -1,0 +1,61 @@
+@use "sass:color";
+@use "../styles/colors" as *;
+
+@mixin button(
+  $bg-color,
+  $text-color: $white,
+  $hover-adjust: 10%,
+  $padding-y: 0.75rem,
+  $padding-x: 2rem,
+  $font-size: 1rem,
+  $font-weight: 600,
+  $border-radius: 8px,
+  $full-width: false
+) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg-color;
+  color: $text-color;
+  padding: $padding-y $padding-x;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+
+  @if $full-width == true {
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: color.scale($bg-color, $lightness: $hover-adjust);
+  }
+
+  &:disabled {
+    background-color: $border-color;
+    cursor: not-allowed;
+  }
+}
+
+.arta-btn-primary {
+  @include button($primary-color);
+}
+
+.arta-btn-danger {
+  @include button($error-color, $white, -5%);
+}
+
+.arta-btn-warning {
+  @include button($error-color, $white, -5%);
+}
+
+.arta-btn-full {
+  @include button($primary-color, $white, 10%, 0.75rem, 2rem, 1rem, 600, 8px, true);
+}
+
+.arta-btn-info {
+    @include button($primary-color, $secondary-color, -10%);
+}
