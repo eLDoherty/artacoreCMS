@@ -1,0 +1,237 @@
+@use "../../..//styles/colors" as *;
+@use "../../..//styles/button" as *;
+
+.arta-media-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .arta-media-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: $text-color;
+        }
+
+        .arta-media-actions {
+            display: flex;
+            gap: 0.5rem;
+
+            .arta-btn-primary {
+                @include button($primary-color);
+            }
+
+            .arta-dropdown {
+                padding: 0.5rem;
+                border: 1px solid $border-color;
+                border-radius: 8px;
+                background: $white;
+                color: $text-color;
+            }
+        }
+    }
+
+    .arta-media-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1rem;
+        min-height: 400px;
+
+        .arta-media-flex {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+
+            .arta-media-item {
+                background: $white;
+                border: 1px solid $border-color;
+                border-radius: 8px;
+                cursor: pointer;
+                overflow: hidden;
+                transition: border 0.2s ease;
+                height: fit-content;
+                width: 22%;
+                margin-right: 1rem;
+                height: 180px;
+                margin-bottom: 1rem;
+
+                &.selected {
+                    border: 2px solid $primary-color;
+                }
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    object-fit: contain;
+                }
+
+                .arta-file-icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: $hover-bg-color;
+                    padding: 2rem 0;
+                    font-weight: 600;
+                    color: $text-color;
+                }
+
+                .arta-media-title {
+                    padding: 0.5rem;
+                    font-size: 0.85rem;
+                    color: $text-color;
+                    text-align: center;
+                    word-break: break-word;
+                }
+            }
+        }
+
+        .arta-media-detail {
+            background: $white;
+            border: 1px solid $border-color;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+
+            .arta-preview {
+                text-align: center;
+                margin-bottom: 1rem;
+
+                img {
+                    max-width: 100%;
+                    border-radius: 8px;
+                }
+
+                .arta-file-icon-preview {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 200px;
+                    background: $hover-bg-color;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    color: $text-color;
+                }
+            }
+
+            .arta-detail-info {
+                font-size: 0.9rem;
+                color: $text-color;
+                margin-bottom: 1rem;
+
+                p {
+                    margin: 0.3rem 0;
+                }
+            }
+
+            .arta-detail-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                .arta-btn-secondary {
+                    @include button($secondary-color, $white, 5%);
+                }
+
+                .arta-btn-danger {
+                    @include button($error-color);
+                }
+            }
+
+            .arta-empty-detail {
+                color: $secondary-text-color;
+                text-align: center;
+                margin-top: 4rem;
+            }
+
+            .arta-alt-edit {
+                margin-top: 0.5rem;
+
+                .arta-alt-text {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+
+                    .arta-btn-text {
+                        background: none;
+                        border: none;
+                        color: $primary-color;
+                        cursor: pointer;
+                        font-size: 0.85rem;
+                        padding: 0.2rem 0.4rem;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                .arta-alt-input-row {
+                    display: flex;
+                    gap: 0.5rem;
+                    margin-top: 0.3rem;
+                    flex-direction: column;
+
+                    input.arta-input {
+                        flex: 1;
+                        padding: 0.4rem 0.6rem;
+                        border: 1px solid $border-color;
+                        border-radius: 6px;
+                        font-size: 0.9rem;
+
+                        &:focus {
+                            outline: none;
+                            border-color: $primary-color;
+                            box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+                        }
+                    }
+                }
+
+                &__buttons {
+                    display: flex;
+
+                    button {
+                        @include button($primary-color);
+                        padding: 0.4rem 0.8rem;
+
+                        &.arta-btn-danger {
+                            @include button($error-color);
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    .arta-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+
+        button {
+            @include button($primary-color);
+            padding: 0.4rem 0.8rem;
+
+            &:disabled {
+                background-color: $border-color;
+                color: $secondary-text-color;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .arta-empty {
+        color: $secondary-text-color;
+        text-align: center;
+        grid-column: 1 / -1;
+    }
+}

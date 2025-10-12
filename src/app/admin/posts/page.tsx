@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import "./posts.scss";
+import PopupConfirmation from "@/app/components/popup/Confirmation";
 
 interface Post {
   id: number;
@@ -13,6 +14,8 @@ interface Post {
 export default function PostList() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -55,13 +58,17 @@ export default function PostList() {
     window.location.href = `/admin/posts/edit/${id}`;
   };
 
-  const handleDelete = async (id: number) => {
-    const confirmDelete = confirm("Are you sure you want to delete this post?");
-    if (!confirmDelete) return;
+  const handleDeleteClick = (id: number) => {
+    setSelectedId(id);
+    setOpenPopup(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!selectedId) return;
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`/api/posts/${id}`, {
+      const res = await fetch(`/api/posts/${selectedId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -69,18 +76,21 @@ export default function PostList() {
       });
 
       if (res.status === 401 || res.status === 403) {
-          localStorage.removeItem("token");
-          window.location.href = "/login";
-          return;
-        }
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+        return;
+      }
 
       if (res.ok) {
-        setPosts((prev) => prev.filter((p) => p.id !== id));
+        setPosts((prev) => prev.filter((p) => p.id !== selectedId));
       } else {
-        alert("Failed to delete post");
+        console.error("Failed to delete post");
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setOpenPopup(false);
+      setSelectedId(null);
     }
   };
 
@@ -92,7 +102,7 @@ export default function PostList() {
     <div className="arta-admin-posts">
       <header className="arta-admin-posts__header">
         <h1 className="arta-admin-posts__title">Post List</h1>
-        <button onClick={handleAdd} className="arta-button arta-button--primary">
+        <button onClick={handleAdd} className="arta-btn-primary">
           + Add Post
         </button>
       </header>
@@ -121,13 +131,13 @@ export default function PostList() {
                   <td>
                     <button
                       onClick={() => handleEdit(post.id)}
-                      className="arta-button arta-button--small"
+                      className="arta-btn-primary"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(post.id)}
-                      className="arta-button arta-button--small arta-button--danger"
+                      onClick={() => handleDeleteClick(post.id)}
+                      className="arta-btn-danger"
                     >
                       Delete
                     </button>
@@ -138,6 +148,16 @@ export default function PostList() {
           </table>
         )}
       </main>
+
+      <PopupConfirmation
+        isOpen={openPopup}
+        title="Delete Post"
+        message="Are you sure you want to delete this post? This action cannot be undone."
+        onClose={() => setOpenPopup(false)}
+        onConfirm={handleDeleteConfirm}
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </div>
   );
 }

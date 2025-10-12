@@ -2,8 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Editor from "@/app/components/editor/Editor";
+import dynamic from "next/dynamic";
 import "./addPost.scss";
+
+const Editor = dynamic(() => import("@/app/components/editor/Editor"), {
+  ssr: false,
+});
 
 export default function AddPostPage() {
   const router = useRouter();
@@ -12,13 +16,18 @@ export default function AddPostPage() {
   const [content, setContent] = useState("");
   const [categoryID, setCategoryID] = useState<number | "">("");
   const [thumbnail, setThumbnail] = useState<File | null>(null);
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+  const [categories, setCategories] = useState<{ categoryID: number; name: string }[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const res = await fetch("/api/categories");
+        const token = localStorage.getItem("token");
+        const res = await fetch("/api/posts/categories", {
+          headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        });
 
         if (res.status === 401 || res.status === 403) {
           localStorage.removeItem("token");
@@ -31,9 +40,9 @@ export default function AddPostPage() {
           setCategories(data);
         } else {
           setCategories([
-            { id: 1, name: "Technology" },
-            { id: 2, name: "Business" },
-            { id: 3, name: "Lifestyle" },
+            { categoryID: 1, name: "Technology" },
+            { categoryID: 2, name: "Business" },
+            { categoryID: 3, name: "Lifestyle" },
           ]);
         }
       } catch (err) {
@@ -59,7 +68,7 @@ export default function AddPostPage() {
         const formData = new FormData();
         formData.append("upload", thumbnail);
 
-        const uploadRes = await fetch("/api/upload", {
+        const uploadRes = await fetch("/api/upload/thumbnail", {
           method: "POST",
           body: formData,
         });
@@ -154,7 +163,7 @@ export default function AddPostPage() {
               >
                 <option value="">Choose Category</option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+                  <option key={cat.categoryID} value={cat.categoryID}>
                     {cat.name}
                   </option>
                 ))}

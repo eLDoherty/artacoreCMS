@@ -138,7 +138,7 @@ export default function EditPostPage() {
       if (thumbnail) {
         const formData = new FormData();
         formData.append("upload", thumbnail);
-        const uploadRes = await fetch("/api/upload", {
+        const uploadRes = await fetch("/api/upload/thumbnail", {
           method: "POST",
           body: formData,
         });

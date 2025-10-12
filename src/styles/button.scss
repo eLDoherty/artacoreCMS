@@ -5,10 +5,10 @@
   $bg-color,
   $text-color: $white,
   $hover-adjust: 10%,
-  $padding-y: 0.75rem,
-  $padding-x: 2rem,
+  $padding-y: 0.5rem,
+  $padding-x: 1.6rem,
   $font-size: 1rem,
-  $font-weight: 600,
+  $font-weight: 400,
   $border-radius: 8px,
   $full-width: false
 ) {
@@ -25,6 +25,7 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   text-decoration: none;
+  margin: 5px;
 
   @if $full-width == true {
     width: 100%;

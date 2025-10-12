@@ -57,3 +57,34 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
     return NextResponse.json({ error: "Error updating post" }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const authHeader = req.headers.get("authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const token = authHeader.split(" ")[1];
+    try {
+      jwt.verify(token, JWT_SECRET);
+    } catch {
+      return NextResponse.json({ error: "Invalid token" }, { status: 403 });
+    }
+
+    const postId = params.id;
+
+    const [result] = await db.query(
+      `UPDATE posts SET isDeleted = 1 WHERE id = ?`,
+      [postId]
+    );
+
+    return NextResponse.json({ status: "success", message: "Post deleted" });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Failed to delete post" }, { status: 500 });
+  }
+}

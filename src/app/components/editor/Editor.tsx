@@ -65,7 +65,6 @@ export default function Editor({ value, onChange }: Props) {
 
     return {
       editorConfig: {
-        // ✅ GPL License
         licenseKey: "GPL",
 
         toolbar: {
@@ -93,7 +92,6 @@ export default function Editor({ value, onChange }: Props) {
           ],
         },
 
-        // ✅ Gunakan hanya plugin open source
         plugins: [
           Autoformat,
           Autosave,
